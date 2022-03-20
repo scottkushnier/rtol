@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// added comment for dev
+
 void rev_word(char *w, int len) {
 	int i;
 	char tmp;
