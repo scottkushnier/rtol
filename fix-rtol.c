@@ -29,12 +29,18 @@ void main() {
 			word[ptr++] = c;
 			inside = 1;
 		}
-		else {
+		else if ((c == ' ') && (inside)) {
+			word[ptr++] = 0x05;
+		} else {
 			if (inside) {
 				rev_word(word, ptr);
 				for (i=0; i<ptr; i++) {
-					putchar(0xd7);
-					putchar(word[i]);
+					if (word[i] == 0x05) {
+						putchar(' ');
+					} else {
+						putchar(0xd7);
+						putchar(word[i]);
+					}
 				}
 			}
 			putchar(c);
@@ -45,8 +51,12 @@ void main() {
 	if (inside) {
 		rev_word(word, ptr);
 		for (i=0; i<ptr; i++) {
-			putchar(0xd7);
-			putchar(word[i]);
+			if (word[i] == 0x05) {
+				putchar(' ');
+			} else {
+				putchar(0xd7);
+				putchar(word[i]);
+			}
 		}
 	}
 }
