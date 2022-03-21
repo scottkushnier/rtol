@@ -6,8 +6,9 @@ void rev_word(char *w, int len) {
 	char tmp;
 	int h;
 
-	if (w[len-1] == 0x05)
+	while ((w[len-1] == 0x05) || (w[len-1] == 0x06)) {
 		len--;
+	}
 	h = len / 2;
 	for (i=0; i<h; i++) {
 		tmp = w[i];
@@ -16,6 +17,21 @@ void rev_word(char *w, int len) {
 	}
 }
 
+void print_word(char *word, int len) {
+	int i;
+	
+	for (i=0; i<len; i++) {
+		if (word[i] == 0x05) {
+			putchar(' ');
+		} else if (word[i] == 0x06) {
+			putchar('-');
+		} else {
+			putchar(0xd7);
+			putchar(word[i]);
+		}
+	}
+}
+	
 void main() {
 	int c;
 	char word[1000];
@@ -33,17 +49,12 @@ void main() {
 		}
 		else if ((c == ' ') && (inside)) {
 			word[ptr++] = 0x05;
+		} else if ((c == '-') && (inside)) {
+			word[ptr++] = 0x06;
 		} else {
 			if (inside) {
 				rev_word(word, ptr);
-				for (i=0; i<ptr; i++) {
-					if (word[i] == 0x05) {
-						putchar(' ');
-					} else {
-						putchar(0xd7);
-						putchar(word[i]);
-					}
-				}
+				print_word(word, ptr);
 			}
 			putchar(c);
 			inside = 0;
@@ -52,14 +63,7 @@ void main() {
 	}
 	if (inside) {
 		rev_word(word, ptr);
-		for (i=0; i<ptr; i++) {
-			if (word[i] == 0x05) {
-				putchar(' ');
-			} else {
-				putchar(0xd7);
-				putchar(word[i]);
-			}
-		}
+		print_word(word, ptr);
 	}
 }
 
