@@ -6,6 +6,8 @@ void rev_word(char *w, int len) {
 	char tmp;
 	int h;
 
+	if (w[len-1] == 0x05)
+		len--;
 	h = len / 2;
 	for (i=0; i<h; i++) {
 		tmp = w[i];
